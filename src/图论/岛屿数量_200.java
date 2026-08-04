@@ -4,10 +4,11 @@ public class 岛屿数量_200 {
     static class Solution{
         static int CountIslands(char[][] grid){
             int res=0;
-            for(int i=0;i<grid.length;i++){
-                for(int j=0;j<grid[0].length;j++){
+            int m=grid.length,n=grid[0].length;
+            for(int i=0;i<m;i++){
+                for(int j=0;j<n;j++){
                     if(grid[i][j]=='1'){
-                        res+=1;
+                        res++;
                         traverse(grid,i,j);
                     }
                 }
@@ -18,8 +19,8 @@ public class 岛屿数量_200 {
             grid[row][col]='2';
             traverse(grid,row-1,col);
             traverse(grid,row+1,col);
-            traverse(grid,row,col-1);
             traverse(grid,row,col+1);
+            traverse(grid,row,col-1);
         }
         public static void main(String[] args){
             char[][] test1=new char[][]{
