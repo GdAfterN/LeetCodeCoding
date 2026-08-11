@@ -5,6 +5,8 @@ package 图论;
 //如果可以完成所有课程，返回 true；否则返回 false。
 public class 课程表_207 {
     static class Solution{
+        static boolean ifComplete(int[][] prerequisites){
 
+        return true;}
     }
 }
