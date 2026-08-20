@@ -32,27 +32,25 @@ static ListNode toLinkedList(int[] vals){
     }
     return dummy.next;}
 
+        // 题眼在于不要用删除的方式去除节点，直接跳过即可
         static ListNode deleteDuplicates(ListNode head){
-            ListNode dum=new ListNode(0,head);
-            ListNode pre=dum;
-            ListNode cur=head;
-            while(cur!=null){
-                if(cur!=null&&cur.next!=null&&cur.val==cur.next.val){
-                    int duplicate=cur.val;
-                    while(cur!=null&&cur.val==duplicate){
-                        cur=cur.next;
-                    }
-                    pre.next=cur;
-                }
-                else{
-                    pre=cur;
-                    cur=cur.next;
-                }
-
-            }return dum.next;
+          ListNode dum=new ListNode();
+          dum.next=head;
+          ListNode p=dum;
+          ListNode cur=head;
+          while(cur!=null&&cur.next!=null){
+              if(cur.val==cur.next.val){
+                  int val=cur.val;
+                  while(cur!=null&&cur.val==val) cur=cur.next;
+                  p.next=cur;
+              }else{
+                  p=cur;
+                  cur=cur.next;
+              }
+          }return dum.next;
         }
         public static void main(String[] args){
-            int[] vals=new int[]{1,1,3,3,4,5,6,7,8,8,9,9,9,9,0};
+            int[] vals=new int[]{1,2,3};
             ListNode head=toLinkedList(vals);
             printLinkedList(deleteDuplicates(head));
         }

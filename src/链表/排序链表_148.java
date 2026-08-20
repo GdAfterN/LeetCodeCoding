@@ -33,16 +33,15 @@ static ListNode toLinkedList(int[] vals){
     return dummy.next;}
 
         static ListNode sortList(ListNode head){
-            if(head==null||head.next==null) return head;
-            ListNode slow=head,fast=head.next;
-            while(fast!=null&&fast.next!=null){
-                slow=slow.next;
-                fast=fast.next.next;
-            }
-            ListNode head2=slow.next;
-            slow.next=null;
-            return merge(sortList(head),sortList(head2));
-
+           if(head==null||head.next==null) return head;
+           ListNode slow=head,fast=head.next;
+           while(fast!=null&&fast.next!=null){
+               slow=slow.next;
+               fast=fast.next.next;
+           }
+           ListNode headB=slow.next;
+           slow.next=null;
+           return merge(sortList(head),sortList(headB));
         }
         static ListNode merge(ListNode headA,ListNode headB){
             ListNode dum=new ListNode();

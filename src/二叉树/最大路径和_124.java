@@ -66,17 +66,18 @@ public class 最大路径和_124 {
         }
         static int res;
         static int maxPathSum(TreeNode root){
+            res=Integer.MIN_VALUE;
             dfs(root);
             return res;
         }
 
-        //dfs返回的是root.val+单条路径的最大值
+        // dfs返回从当前节点出发，只能选择左、右其中一边向下延伸的最大路径和。
         static int dfs(TreeNode root){
             if(root==null) return 0;
             int left=Math.max(0,dfs(root.left));
             int right=Math.max(0,dfs(root.right));
-            res=Math.max(res,root.val+left+right);
-            return root.val+Math.max(left,right);
+            res=Math.max(res,left+right+root.val);
+            return Math.max(left,right)+root.val;
         }
 
         public static void main(String[] args){

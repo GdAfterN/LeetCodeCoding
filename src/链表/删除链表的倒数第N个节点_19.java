@@ -33,17 +33,18 @@ static ListNode toLinkedList(int[] vals){
     return dummy.next;}
 
         static ListNode removeNthFromEnd(ListNode head,int k){
-            ListNode dummy=new ListNode(0,head);
-            ListNode slow=dummy,fast=dummy;
-            for(int i=0;i<k;i++){
-                fast=fast.next;
-            }
-            while(fast.next!=null){
-                slow=slow.next;
-                fast=fast.next;
-            }
-            slow.next=slow.next.next;
-            return dummy.next;
+          ListNode dum=new ListNode();
+          dum.next=head;
+          ListNode slow=dum,fast=dum;
+          for(int i=0;i<k;i++){
+              fast=fast.next;
+          }
+          while(fast!=null&&fast.next!=null){
+              slow=slow.next;
+              fast=fast.next;
+          }
+          slow.next=slow.next.next;
+          return dum.next;
         }
         public static void main(String[] args){
             int[] vals=new int[]{1,2,3,4,5};

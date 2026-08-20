@@ -33,41 +33,47 @@ public class 重排链表_143 {
             }
             return dum.next;
         }
-        static void reorderList(ListNode head) {
-            ListNode slow=head;
-            ListNode fast=head.next;
+
+        static ListNode reorderList(ListNode head){
+            if(head==null) return null;
+            ListNode slow=head,fast=head.next;
             while(fast!=null&&fast.next!=null){
                 slow=slow.next;
                 fast=fast.next.next;
             }
-            ListNode right=slow.next;
+            ListNode headB=slow.next;
             slow.next=null;
-            ListNode headB=reverse(right);
-            merge(head,headB);
+            ListNode revHeadB=reverse(headB);
+            return merge(head,revHeadB);
         }
+
         static ListNode reverse(ListNode head){
-            ListNode pre=null;
-            ListNode cur=head;
-            while(cur!=null){
-                ListNode next=cur.next;
-                cur.next=pre;
-                pre=cur;
-                cur=next;
-            }
-            return pre;
+                ListNode pre=null;
+                ListNode cur=head;
+                while(cur!=null){
+                    ListNode next=cur.next;
+                    cur.next=pre;
+                    pre=cur;
+                    cur=next;
+                }
+                return pre;
         }
-        static void merge(ListNode headA,ListNode headB){
-            ListNode p1;
-            ListNode p2;
+
+        static ListNode merge(ListNode headA,ListNode headB){
+            ListNode dum=new ListNode();
+            ListNode p=dum;
             while(headA!=null&&headB!=null){
-                p1=headA.next;
-                p2=headB.next;
-                headA.next=headB;
-                headA=p1;
-                headB.next=headA;
-                headB=p2;
+                p.next=headA;
+                p=p.next;
+                headA=headA.next;
+                p.next=headB;
+                p=p.next;
+                headB=headB.next;
             }
+            if(headA!=null) p.next=headA;
+            return dum.next;
         }
+
         public static void main(String[] args){
             int[] vals=new int[]{1,2,3,4,5};
             ListNode test1=toLinkedList(vals);

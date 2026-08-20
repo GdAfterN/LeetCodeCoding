@@ -66,15 +66,17 @@ public class 验证二叉搜索树_98 {
         }
 
         static boolean isValidBST(TreeNode root){
-            return BST(root,Long.MIN_VALUE,Long.MAX_VALUE);
+            return isBST(root,Long.MIN_VALUE,Long.MAX_VALUE);
         }
-        static boolean BST(TreeNode root,long min,long max){
+
+        // 只需要1.当前节点满足条件    2.左右子节点满足条件
+        static boolean isBST(TreeNode root,long low,long high){
                     if(root==null) return true;
-                    if(root.val<=min||root.val>=max) return false;
-                    boolean flag1=BST(root.left,min,root.val);
-                    boolean flag2=BST(root.right,root.val,max);
-                    return flag1&&flag2;
+                    if(root.val<=low||root.val>=high) return false;
+                    return isBST(root.left,low,root.val)&&isBST(root.right,root.val,high);
         }
+
+
 
         public static void main(String[] args){
                     Integer[] vals=new Integer[]{5,1,4,null,null,3,6};

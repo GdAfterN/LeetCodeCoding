@@ -1,34 +1,4 @@
 package 链表;
-//static class ListNode{
-//    int val;
-//    ListNode next;
-//    ListNode(){};
-//    ListNode(int val){
-//        this.val=val;
-//    }
-//    ListNode(int val,ListNode next){
-//        this.val=val;
-//        this.next=next;
-//    }
-//}
-//static void printLinkedList(ListNode head){
-//    StringBuilder sb=new StringBuilder();
-//    ListNode cur=head;
-//    while(cur!=null){
-//        if(cur.next!=null) sb.append(cur.val+"->");
-//        else sb.append(cur.val);
-//        cur=cur.next;
-//    }System.out.println(sb.toString());
-//}
-//static ListNode toLinkedList(int[] vals){
-//    ListNode dummy=new ListNode();
-//    ListNode cur=dummy;
-//    for(int val:vals){
-//        cur.next=new ListNode(val);
-//        cur=cur.next;
-//    }
-//    return dummy.next;}
-
 public class K个一组反转链表_25 {
     static class Solution{
         static class ListNode{
@@ -43,33 +13,34 @@ public class K个一组反转链表_25 {
                 this.val=val;
             }
         }
-        static ListNode toLinkedList(int[] vals){
-            if(vals.length==0) return null;
-            ListNode dum=new ListNode();
-            ListNode cur=dum;
-            for(int val:vals){
-                cur.next=new ListNode(val);
-                cur=cur.next;
-            }
-            return dum.next;
+        static ListNode createLinkedList(int[] vals){
+           if(vals.length==0) return null;
+           ListNode dum=new ListNode();
+           ListNode p=dum;
+           for(int val:vals){
+               p.next=new ListNode(val);
+               p=p.next;
+           }
+           return dum.next;
         }
         static void printLinkedList(ListNode head){
-            if(head==null) System.out.println("null");
-            StringBuilder sb=new StringBuilder();
-            ListNode cur=head;
-            while(cur!=null){
-                if(cur.next!=null) sb.append(cur.val+"->");
-                else sb.append(cur.val);
-                cur=cur.next;
-            }System.out.println(sb.toString());
+            if(head==null){
+                System.out.println("null");
+                return;
+            }
+            ListNode p=head;
+            while(p!=null){
+                if(p.next==null) System.out.println(p.val);
+                else System.out.print(p.val+"->");
+                p=p.next;
+            }
         }
         static ListNode reverseKGroup(ListNode head, int k){
-            ListNode dummy=new ListNode();
-            dummy.next=head;
-            ListNode start=dummy;
-            ListNode end=head;
+            ListNode dum=new ListNode(0,head);
+            ListNode start=dum;
+            ListNode end=dum;
             while(end!=null){
-                for(int i=1;i<k;i++){
+                for(int i=0;i<k;i++){
                     end=end.next;
                     if(end==null) break;
                 }
@@ -79,13 +50,12 @@ public class K个一组反转链表_25 {
                 end.next=null;
                 start.next=reverse(trueStart);
                 trueStart.next=next;
-                end=next;
                 start=trueStart;
+                end=trueStart;
             }
-            return dummy.next;
+            return dum.next;
         }
         static ListNode reverse(ListNode head){
-            if(head==null) return null;
             ListNode pre=null;
             ListNode cur=head;
             while(cur!=null){
@@ -98,8 +68,8 @@ public class K个一组反转链表_25 {
         }
         public static void main(String[] args){
             int[] testVals=new int[]{1,2,3,4,5};
-            ListNode testNode=toLinkedList(testVals);
-            printLinkedList(reverseKGroup(testNode,3));
+            ListNode testNode= createLinkedList(testVals);
+            printLinkedList(reverseKGroup(testNode,2));
         }
     }
 }

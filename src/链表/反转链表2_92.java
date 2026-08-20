@@ -32,23 +32,22 @@ public class 反转链表2_92 {
             }
             return dummy.next;}
 
-        static ListNode isPalindrome(ListNode head,int left,int right){
-        if(head==null) return null;
-        ListNode dum=new ListNode(0,head);
-        ListNode slow=dum,fast=dum;
-        for(int i=0;i<right-left;i++) fast=fast.next;
-        for(int i=0;i<left-1;i++){
-            slow=slow.next;
-            fast=fast.next;
-        }
-        ListNode start=slow.next;
-        ListNode end=fast.next;
-        ListNode next=end.next;
-        end.next=null;
-        ListNode rev=reverse(start);
-        slow.next=rev;
-        start.next=next;
-        return dum.next;
+        static ListNode reverseLR(ListNode head,int left,int right){
+            ListNode dum=new ListNode();
+            dum.next=head;
+            ListNode slow=dum,fast=dum;
+            for(int i=0;i<right-left;i++) fast=fast.next;
+            for(int i=0;i<left-1;i++){
+                slow=slow.next;
+                fast=fast.next;
+            }
+            ListNode next=fast.next.next;
+            fast.next.next=null;
+            ListNode head1=slow.next;
+            slow.next=null;
+            slow.next=reverse(head1);
+            head1.next=next;
+            return dum.next;
         }
         static ListNode reverse(ListNode head){
             ListNode pre=null;
@@ -64,7 +63,7 @@ public class 反转链表2_92 {
         public static void main(String[] args){
             int[] vals=new int[]{1,2,3,4,5};
             ListNode head=toLinkedList(vals);
-            ListNode res=isPalindrome(head,2,5);
+            ListNode res=reverseLR(head,2,5);
             printLinkedList(res);
         }
     }

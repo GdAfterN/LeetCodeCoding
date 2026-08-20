@@ -8,80 +8,81 @@ import java.util.*;
 //函数 get 和 put 必须以 O(1) 的平均时间复杂度运行。
 public class LRU缓存_146 {
     static class Solution{
-        static class LRUCache{
-            static class Node{
-                int key,val;
-                Node pre,next;
-                public Node(){};
-                public Node(int key,int val){
-                    this.key=key;
-                    this.val=val;
-                }
+    static class LRUCache{
+        static class Node{
+            int key,val;
+            Node pre,next;
+            public Node(){}
+            public Node(int key,int val){
+                this.key=key;
+                this.val=val;}
+        }
+        static class Queue{
+            Node head,end;
+            public Queue(){
+                head=new Node();
+                end=new Node();
+                head.next=end;
             }
-            static class DoubleList{
-                Node first,end;
-                public DoubleList(){
-                    this.first=new Node();
-                    this.end=new Node();
-                    first.next=end;
-                    end.pre=first;
-                }
-                public void addAtFirst(Node node){
-                    Node next=first.next;
-                    first.next=node;
-                    node.pre=first;
-                    node.next=next;
-                    next.pre=node;
-                }
-                public void delete(Node node){
-                    Node pre=node.pre;
-                    Node next=node.next;
-                    pre.next=next;
-                    next.pre=pre;
-                }
-                public Node deleteAtLast(){
-                    if(first.next==end) return null;
-                    Node node=end.pre;
-                    delete(node);
-                    return node;
-                }
+            public void addFirst(Node node){
+                Node next=head.next;
+                head.next=node;
+                node.pre=head;
+                node.next=next;
+                next.pre=node;
             }
-            Map<Integer,Node> map;
-            int capacity;
-            DoubleList list;
-            public LRUCache(int capacity){
-                this.capacity=capacity;
-                this.map=new HashMap<>();
-                this.list=new DoubleList();
+
+            public void delete(Node node){
+                Node pre=node.pre;
+                Node next=node.next;
+                pre.next=next;
+                next.pre=pre;
             }
-            public int get(int key){
-                if(!map.containsKey(key)) return -1;
+
+            public Node deleteLast(){
+                if(head.next==end) return null;
+                Node node=end.pre;
+                delete(node);
+                return node;
+            }
+
+        }
+        Queue queue;
+        int capacity;
+        Map<Integer,Node> map;
+        public LRUCache(int capacity){
+            this.capacity=capacity;
+            queue=new Queue();
+            map=new HashMap<>();
+        }
+
+        public int get(int key){
+            if(map.containsKey(key)){
                 Node node=map.get(key);
-                list.delete(node);
-                list.addAtFirst(node);
+                queue.delete(node);
+                queue.addFirst(node);
                 return node.val;
+            }else return -1;
+        }
+
+        public void put(int key, int value){
+            if(!map.containsKey(key)){
+                Node node=new Node(key,value);
+                map.put(key,node);
+                if(map.size()>capacity){
+                   Node removeNode=queue.deleteLast();
+                   map.remove(removeNode.key);
+                   queue.addFirst(node);
+                }else queue.addFirst(node);
             }
-            public void put(int key, int value){
-                if(map.containsKey(key)){
-                    Node node=map.get(key);
-                    list.delete(node);
-                    node.val=value;
-                    list.addAtFirst(node);
-                }else{
-                    if(map.size()==capacity){
-                        Node node=list.deleteAtLast();
-                        map.remove(node.key);
-                        Node newNode=new Node(key,value);
-                        map.put(key,newNode);
-                        list.addAtFirst(newNode);
-                    }else{
-                        Node node=new Node(key,value);
-                        map.put(key,node);
-                        list.addAtFirst(node);
-                    }
-                }
+            else{
+              Node node=map.get(key);
+              node.val=value;
+              queue.delete(node);
+              queue.addFirst(node);
             }
         }
+    }
         public static void main(String[] args){
 //["LRUCache", "put", "put", "get", "put", "get", "put", "get", "get", "get"]
 //[[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]]

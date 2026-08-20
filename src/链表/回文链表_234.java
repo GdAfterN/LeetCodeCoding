@@ -33,22 +33,21 @@ static ListNode toLinkedList(int[] vals){
     return dummy.next;}
 
         static boolean isPalindrome(ListNode head){
-            if(head==null||head.next==null) return true;
-            ListNode slow=head;
-            ListNode fast=head.next;
-            while(fast!=null&&fast.next!=null){
-                slow=slow.next;
-                fast=fast.next.next;
-            }
-            ListNode head2=slow.next;
-            slow.next=null;
-            ListNode rev=reverse(head2);
-            while(rev!=null){
-                if(head.val!=rev.val) return false;
-                head=head.next;
-                rev=rev.next;
-            }
-            return true;
+           ListNode slow=head;
+           ListNode fast=head.next;
+           while(fast!=null&&fast.next!=null){
+               slow=slow.next;
+               fast=fast.next.next;
+           }
+           ListNode headB=slow.next;
+           slow.next=null;
+           ListNode revHeadB=reverse(headB);
+           while(head!=null&&revHeadB!=null){
+               if(head.val!=revHeadB.val) return false;
+               head=head.next;
+               revHeadB=revHeadB.next;
+           }
+           return true;
         }
         static ListNode reverse(ListNode head){
             ListNode pre=null;
@@ -62,7 +61,7 @@ static ListNode toLinkedList(int[] vals){
             return pre;
         }
         public static void main(String[] args){
-            int[] vals=new int[]{1,2,2,1};
+            int[] vals=new int[]{1,2,2,2};
             ListNode head=toLinkedList(vals);
             System.out.println(isPalindrome(head));
         }

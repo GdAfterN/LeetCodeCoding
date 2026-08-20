@@ -15,27 +15,7 @@ public class 从前序和中序构造二叉树_105 {
             }
         }
 
-//        static TreeNode createTree(Integer[] vals){
-//            if(vals.length==0) return null;
-//            Deque<TreeNode> deque=new ArrayDeque<>();
-//            TreeNode root=new TreeNode(vals[0]);
-//            deque.addFirst(root);
-//            int i=1;
-//            while(!deque.isEmpty()&&i<vals.length){
-//                TreeNode node=deque.pollFirst();
-//                if(vals[i]!=null){
-//                    node.left=new TreeNode(vals[i]);
-//                    deque.offerLast(node.left);
-//                }
-//                i++;
-//                if(i<vals.length&&vals[i]!=null){
-//                    node.right=new TreeNode(vals[i]);
-//                    deque.offerLast(node.right);
-//                }
-//                i++;
-//            }
-//            return root;
-//        }
+
         static TreeNode createTree(Integer[] vals){
             if(vals.length==0) return null;
             Deque<TreeNode> deque=new ArrayDeque<>();
@@ -83,31 +63,30 @@ public class 从前序和中序构造二叉树_105 {
             }
         }
 
-        static TreeNode buildTree(int[] inOrder,int[] preOrder){
-            Map<Integer,Integer> map=new HashMap<>();
-            for(int i=0;i<inOrder.length;i++){
-                map.put(inOrder[i],i);
-            }
-            TreeNode root=build(preOrder,0,preOrder.length-1,0,inOrder.length-1,map);
-            return root;
-
+        static TreeNode build(int[] preOrder,int[] inOrder){
+                    Map<Integer,Integer> map=new HashMap<>();
+                    for(int i=0;i<inOrder.length;i++){
+                        map.put(inOrder[i],i);
+                    }
+                    return buildTree(preOrder,0,preOrder.length-1,0,inOrder.length-1,map);
         }
 
-        static TreeNode build(int[] preOrder,int preLeft,int preRight,int inLeft,int inRight,Map<Integer,Integer> map){
+        static TreeNode buildTree(int[] preOrder,int preLeft,int preRight,int inLeft,int inRight,Map<Integer,Integer> map){
                     if(preLeft>preRight) return null;
-                    int rootVal=preOrder[preLeft];
-                    TreeNode root=new TreeNode(rootVal);
-                    int inRoot=map.get(rootVal);
-                    int leftLen=inRoot-inLeft;
-                    root.left=build(preOrder,preLeft+1,preLeft+leftLen,inLeft,inRoot-1,map);
-                    root.right=build(preOrder,preLeft+leftLen+1,preRight,inRoot+1,inRight,map);
+                    TreeNode root=new TreeNode(preOrder[preLeft]);
+                    int inRoot=map.get(root.val);
+                    int left=inRoot-inLeft;
+                    root.left=buildTree(preOrder,preLeft+1,preLeft+left,inLeft,inRoot-1,map);
+                    root.right=buildTree(preOrder,preLeft+left+1,preRight,inRoot+1,inRight,map);
                     return root;
         }
+
+
 
         public static void main(String[] args){
                     int[] pre=new int[]{3,9,20,15,7};
                     int[] in=new int[]{9,3,15,20,7};
-                    printTree(buildTree(in,pre));
+                    printTree(build(pre,in));
         }
 
     }

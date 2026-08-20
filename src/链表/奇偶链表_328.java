@@ -32,20 +32,26 @@ static ListNode toLinkedList(int[] vals){
     }
     return dummy.next;}
 
+        // 使用偶数节点前判
         static ListNode ddEvenList(ListNode head){
-            if(head==null||head.next==null) return head;
-            ListNode jHead=head;
-            ListNode oHead=head.next;
-            ListNode o=oHead;
-            while(o!=null&&o.next!=null){
-                ListNode j=o.next;
-                o.next=o.next.next;
-                jHead.next=j;
-                jHead=jHead.next;
-                o=o.next;
-            }
-            jHead.next=oHead;
-            return head;
+          ListNode oddHead=head;
+          ListNode evenHead=head.next;
+          ListNode even=evenHead;
+          ListNode odd=oddHead;
+          while(even!=null&&even.next!=null){
+              odd.next=even.next;;
+              odd=odd.next;
+              even.next=even.next.next;
+              even=even.next;
+          }
+          odd.next=evenHead;
+          return oddHead;
+        }
+
+        public static void main(String[] args){
+            int[] vals=new int[]{1,2,3,4,5,6,7};
+            ListNode node=toLinkedList(vals);
+            printLinkedList(ddEvenList(node));
         }
     }
 }
