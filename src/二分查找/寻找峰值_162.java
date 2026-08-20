@@ -17,7 +17,7 @@ public class 寻找峰值_162 {
             // 题目要求至少有一个峰值，故必然会收敛到left=right
             while(left<right){
                 int mid=(left+right)/2;
-                if(nums[mid]>nums[mid+1]) right=mid;
+                if(nums[mid+1]<nums[mid]) right=mid;
                 else left=mid+1;
             }
             return left;

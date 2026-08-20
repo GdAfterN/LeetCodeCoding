@@ -31,27 +31,27 @@ public class 在排序数组中查找元素的第一个和最后一个位置_34 
             int res=-1;
             while(left<=right){
                 int mid=(left+right)/2;
-                if(nums[mid]<=target){
-                    if(nums[mid]==target) res=mid;  // 记录下mid，继续向右二分
-                    left=mid+1;
-                }
-                else right=mid-1;
-            }
-            return res;
+                if(nums[mid]>=target){
+                    right=mid-1;
+                    if(nums[mid]==target) res=mid;  // 将这一步也优化成了二分查找
+                }else left=mid+1;
+            }return res;
         }
 
         static int searchLeft(int[] nums,int target){
             int left=0,right=nums.length-1;
             int res=-1;
             while(left<=right){
-                int mid=(left+right)/2;
-                if(nums[mid]>=target){
-                    if(nums[mid]==target) res=mid;  // 记录下mid，继续向右二分
+                int mid=left+(right-left)/2;
+                if(nums[mid]<=target){
+                    left=mid+1;                     //
+                    if(nums[mid]==target) res=mid;  // 命中就记录
+                }else{
                     right=mid-1;
                 }
-                else left=mid+1;
             }
             return res;
+
         }
 
 

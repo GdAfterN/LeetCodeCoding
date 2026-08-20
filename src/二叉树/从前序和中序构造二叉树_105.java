@@ -17,32 +17,26 @@ public class 从前序和中序构造二叉树_105 {
 
 
         static TreeNode createTree(Integer[] vals){
-            if(vals.length==0) return null;
-            Deque<TreeNode> deque=new ArrayDeque<>();
-            TreeNode root=new TreeNode(vals[0]);
-            deque.offerLast(root);
-            int index=1;
-            while(!deque.isEmpty()&&index<vals.length){
-                TreeNode node=deque.pollFirst();
-                if(vals[index]!=null){
-                    node.left=new TreeNode(vals[index]);
-                    deque.offerLast(node.left);
-                }
-                index++;
-                if(index<vals.length&&vals[index]!=null){
-                    node.right=new TreeNode(vals[index]);
-                    deque.offerLast(node.right);
-                }
-                index++;
-            }
-            return root;
+           Deque<TreeNode> deque=new ArrayDeque<>();
+           TreeNode root=new TreeNode(vals[0]);
+           deque.offerLast(root);
+           int index=1;
+           while(!deque.isEmpty()&&index<vals.length){
+               TreeNode node=deque.pollFirst();
+               if(vals[index]!=null){
+                   node.left=new TreeNode(vals[index]);
+                   deque.offerLast(node.left);
+               }
+               index++;
+               if(index<vals.length&&vals[index]!=null){
+                   node.right=new TreeNode(vals[index]);
+                   deque.offerLast(node.right);
+               }
+               index++;
+           }return root;
                 }
 
         static void printTree(TreeNode root){
-            if(root==null){
-                System.out.println("null");
-                return;
-            }
             List<String> res=new ArrayList<>();
             Deque<TreeNode> deque=new LinkedList<>();
             deque.offerLast(root);
@@ -58,8 +52,8 @@ public class 从前序和中序构造二叉树_105 {
             int last=res.size()-1;
             while(last>=0&&res.get(last).equals("null")) last--;
             for(int i=0;i<=last;i++){
-                if(i==last) System.out.println(res.get(last));
-                else System.out.print(res.get(i)+',');
+                if(i==last) System.out.println(res.get(i));
+                else System.out.print(res.get(i)+",");
             }
         }
 

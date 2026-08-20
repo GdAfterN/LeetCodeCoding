@@ -6,10 +6,11 @@ public class 最大子数组和_53 {
             int res=Integer.MIN_VALUE;
             int sum=0;
             for(int num:nums){
-                if(sum<=0) sum=num;
-                else sum=num+sum;
-                res=Math.max(res,sum);
-            }return res;
+                if(sum>=0) sum+=num;
+                else sum=num;
+                res=Math.max(sum,res);
+            }
+            return res;
         }
 
         public static void main(String[] args){

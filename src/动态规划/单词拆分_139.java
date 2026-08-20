@@ -6,16 +6,14 @@ import java.util.*;
 public class 单词拆分_139 {
     static class Solution{
         static boolean wordBreak(String s, List<String> wordDict){
-            Set<String> set=new HashSet<>(wordDict);
-            boolean[] dp=new boolean[s.length()+1];
-            dp[0]=true;
-            for(int i=1;i<=s.length();i++){
-                for(int j=0;j<i;j++){
-                    dp[i]=dp[j]&&set.contains(s.substring(j,i));
-                    if(dp[i]) break;
-                }
-            }
-            return dp[s.length()];
+           Set<String> set=new HashSet<>(wordDict);
+           boolean[] dp=new boolean[s.length()+1];
+           dp[0]=true;
+           for(int i=1;i<=s.length();i++){
+               for(int j=0;j<i;j++){
+                   dp[i]=dp[i]||(dp[j]&&set.contains(s.substring(j,i)));
+               }
+           }return dp[s.length()];
         }
 
         public static void main(String[] args){

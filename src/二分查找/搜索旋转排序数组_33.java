@@ -7,7 +7,6 @@ public class 搜索旋转排序数组_33 {
             while(left<=right){
                 int mid=(left+right)/2;
                 // 先确认是否相等
-                if(nums[mid]==target) return mid;
                 // 一定要使用>=比较，避免陷入死循环
                 if(nums[mid]>=nums[left]){
                     if(nums[left]<=target&&nums[mid]>target) right=mid-1;
